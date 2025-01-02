@@ -44,9 +44,9 @@ class Add(FlaskForm):
 def send_mail(names):
     def email_task(names):
         l = ", ".join(i[0].name for i in names)
-        sender_email = "nithish1053015@gmail.com"
-        receiver_email = "nithish1053015@gmail.com"  # Send email to yourself
-        app_password = "vpll aaye ctjf shom"
+        sender_email = "abc@gmail.com"
+        receiver_email = "xyz@gmial.com"  
+        app_password = "app_password_from_gmail" # U have to create a app password after enabling 2-Factor-Auth and copy the password here
 
         subject = "Birthday Reminder"
         body = f"Today's birthdays: {l}. Don't forget to wish them!"
