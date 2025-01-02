@@ -1,0 +1,22 @@
+{% from 'bootstrap5/form.html' import render_form %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Birthday Reminder</title>
+    {{ bootstrap.load_css() }}
+</head>
+<body>
+    {{ render_form(form) }}
+    {% if added %}
+        <h5>Date has been successfully added</h5>
+    {% endif %}
+    <h3>Today's Birthday Names</h3>
+    {% if names %}
+        {% for i in names %}
+            <h6>{{ i[0].name }}</h6>
+        {% endfor %}
+    {% else %}
+        <h6>No Birthday Available</h6>
+    {% endif %}
+</body>
+</html>
