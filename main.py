@@ -44,9 +44,9 @@ class Add(FlaskForm):
 def send_mail(names):
     def email_task(names):
         l = ", ".join(i[0].name for i in names)
-        sender_email = "abc@gmail.com"
-        receiver_email = "xyz@gmial.com"  
-        app_password = "app_password_from_gmail" # U have to create a app password after enabling 2-Factor-Auth and copy the password here
+        sender_email = "nithish1053015@gmail.com"
+        receiver_email = "nithish1053015@gmail.com"  # Send email to yourself
+        app_password = "vpll aaye ctjf shom"
 
         subject = "Birthday Reminder"
         body = f"Today's birthdays: {l}. Don't forget to wish them!"
@@ -76,13 +76,17 @@ def send_mail(names):
 @app.route('/', methods=['POST', 'GET'])
 def home():
     form = Add()
-    current_date = str(datetime.datetime.now().date())
+    current_date = datetime.date.today()  # Ensure it's a date object, not a string
+
     with app.app_context():
         db.create_all()  # Ensure the database and table exist
         # Query for today's birthdays
         d = db.session.execute(db.select(Bdates).where(Bdates.date == current_date)).fetchall()
-        # Send email notifications
-        send_mail(d)
+
+        # Only send email if there are birthdays today
+        if d:
+            send_mail(d)
+
         if form.validate_on_submit():
             # Save form data to the database
             info = Bdates(
@@ -92,6 +96,7 @@ def home():
             db.session.add(info)
             db.session.commit()
             return redirect(url_for('home'))
+
         return render_template("index.html", form=form, added=False, names=d)
 
 
